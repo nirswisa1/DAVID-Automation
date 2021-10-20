@@ -1,5 +1,4 @@
 from selenium import webdriver
-from openpyxl import load_workbook
 import pyautogui
 from time import sleep
 
@@ -7,7 +6,7 @@ driver = webdriver.Chrome(r'C:\Users\NS\Downloads\PYTHON\chromedriver.exe')
 driver.get('https://david.ncifcrf.gov/tools.jsp')
 driver.maximize_window()
 driver.implicitly_wait(300)
-
+#Proteins list example
 prot = [''''  Q4KML4,
 Q6ZQ06,
 Q3TDD9,
@@ -68,6 +67,7 @@ Q8BSI6,
 P08905,
 Gsk3b
 ''']
+
 driver.find_element_by_id('LISTBox').send_keys(prot)
 identifier = driver.find_element_by_id('Identifier')
 identifier.click()
@@ -91,33 +91,10 @@ driver.find_element_by_xpath(
     '/html/body/table[2]/tbody/tr/td[3]/table/tbody/tr/td/table/tbody/tr/td/table/tbody/tr/td/form/table[3]/tbody/tr[2]/td[1]/button').click()
 driver.switch_to.window(driver.window_handles[1])
 driver.maximize_window()
-driver.find_element_by_xpath('/html/body/table/tbody/tr[2]/td/table/tbody/tr[1]/td/form/table[2]/tbody/tr/td[2]/font/a').click()
+driver.find_element_by_xpath(
+    '/html/body/table/tbody/tr[2]/td/table/tbody/tr[1]/td/form/table[2]/tbody/tr/td[2]/font/a').click()
 sleep(2)
 pyautogui.click()
-pyautogui.hotkey('ctrl','s')
+pyautogui.hotkey('ctrl', 's')
 pyautogui.press('1')
 pyautogui.press('enter')
-
-wb = load_workbook('bar charts1.xlsx')
-ws = wb.active
-
-current=1
-for cell in ws['F']:
-    if cell.value is None or cell.value=="Genes":
-        current+=1
-    else:
-        funcx(current)
-
-def funcx(current):
-    cellNum=current
-    cur_cell_val=ws["F"+str(cellNum)].value
-    for cell in range(cellNum,50):
-        if ws["F"+str(cellNum)].value is None:
-            break
-        if ws["F"+str(cellNum)].value ==cur_cell_val:
-            ws["O"+str(cellNum)]=ws["B"+str(cellNum)].value
-
-
-
-
-
