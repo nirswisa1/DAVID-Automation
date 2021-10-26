@@ -1,12 +1,77 @@
 from selenium import webdriver
 import pyautogui
 from time import sleep
+from tkinter import *
+#Tkinter
+excelN=''
+prot=''
+def myClick():
+    global excelN
+    global prot
+    excelN=excelE.get()
+    prot=protE.get()
+    root.destroy()
+    return excelN,prot
+#GUI
+root = Tk()
+root.title('Nir Yad2 Bot')
 
+#Slots
+protE = Entry(root,width=50,borderwidth=2)
+protE.grid(row=0,column = 1)
+excelE = Entry(root,width=50,borderwidth=2)
+excelE.grid(row=1,column = 1)
+#Labels
+label1 = Label(root,text='Proteins: ')
+label2= Label(root,text='Excel name: ')
+label1.grid(row=0,column = 0)
+label2.grid(row=1,column = 0)
+#Button
+b = Button(root,text = "Run",command = myClick)
+b.grid(row=2,column = 2)
+
+root.mainloop()
+
+#selenium
 driver = webdriver.Chrome(r'C:\Users\NS\Downloads\PYTHON\chromedriver.exe')
 driver.get('https://david.ncifcrf.gov/tools.jsp')
 driver.maximize_window()
 driver.implicitly_wait(300)
-#Proteins list example
+driver.find_element_by_id('LISTBox').send_keys(prot)
+identifier = driver.find_element_by_id('Identifier')
+identifier.click()
+identifier.send_keys('uu')
+driver.find_element_by_name('rbUploadType').click()
+driver.find_element_by_name('B52').click()
+driver.find_element_by_xpath(
+    '/html/body/table[2]/tbody/tr/td[3]/table/tbody/tr/td/table/tbody/tr/td/table/tbody/tr/td/table/tbody/tr[5]/td[2]').click()
+driver.find_element_by_name('Clear All').click()
+driver.find_element_by_id('Gene_Ontologytd').click()
+driver.find_element_by_xpath(
+    '/html/body/table[2]/tbody/tr/td[3]/table/tbody/tr/td/table/tbody/tr/td/table/tbody/tr/td/form/ul/li[2]/ul/li/table/tbody/tr[7]/td[1]/input').click()
+driver.find_element_by_xpath(
+    '/html/body/table[2]/tbody/tr/td[3]/table/tbody/tr/td/table/tbody/tr/td/table/tbody/tr/td/form/ul/li[2]/ul/li/table/tbody/tr[15]/td[1]/input').click()
+driver.find_element_by_xpath(
+    '/html/body/table[2]/tbody/tr/td[3]/table/tbody/tr/td/table/tbody/tr/td/table/tbody/tr/td/form/ul/li[2]/ul/li/table/tbody/tr[23]/td[1]/input').click()
+driver.find_element_by_id('Pathwaystd').click()
+driver.find_element_by_xpath(
+    '/html/body/table[2]/tbody/tr/td[3]/table/tbody/tr/td/table/tbody/tr/td/table/tbody/tr/td/form/ul/li[6]/ul/li/table/tbody/tr[3]/td[1]/input').click()
+driver.find_element_by_xpath(
+    '/html/body/table[2]/tbody/tr/td[3]/table/tbody/tr/td/table/tbody/tr/td/table/tbody/tr/td/form/table[3]/tbody/tr[2]/td[1]/button').click()
+driver.switch_to.window(driver.window_handles[1])
+driver.maximize_window()
+driver.find_element_by_xpath(
+    '/html/body/table/tbody/tr[2]/td/table/tbody/tr[1]/td/form/table[2]/tbody/tr/td[2]/font/a').click()
+sleep(2)
+pyautogui.click()
+#Saving
+pyautogui.hotkey('ctrl', 's')
+sleep(1)
+pyautogui.write(excelN)
+#pyautogui.press('enter')
+
+#Protein list example
+"""
 prot = [''''  Q4KML4,
 Q6ZQ06,
 Q3TDD9,
@@ -67,34 +132,4 @@ Q8BSI6,
 P08905,
 Gsk3b
 ''']
-
-driver.find_element_by_id('LISTBox').send_keys(prot)
-identifier = driver.find_element_by_id('Identifier')
-identifier.click()
-identifier.send_keys('uu')
-driver.find_element_by_name('rbUploadType').click()
-driver.find_element_by_name('B52').click()
-driver.find_element_by_xpath(
-    '/html/body/table[2]/tbody/tr/td[3]/table/tbody/tr/td/table/tbody/tr/td/table/tbody/tr/td/table/tbody/tr[5]/td[2]').click()
-driver.find_element_by_name('Clear All').click()
-driver.find_element_by_id('Gene_Ontologytd').click()
-driver.find_element_by_xpath(
-    '/html/body/table[2]/tbody/tr/td[3]/table/tbody/tr/td/table/tbody/tr/td/table/tbody/tr/td/form/ul/li[2]/ul/li/table/tbody/tr[7]/td[1]/input').click()
-driver.find_element_by_xpath(
-    '/html/body/table[2]/tbody/tr/td[3]/table/tbody/tr/td/table/tbody/tr/td/table/tbody/tr/td/form/ul/li[2]/ul/li/table/tbody/tr[15]/td[1]/input').click()
-driver.find_element_by_xpath(
-    '/html/body/table[2]/tbody/tr/td[3]/table/tbody/tr/td/table/tbody/tr/td/table/tbody/tr/td/form/ul/li[2]/ul/li/table/tbody/tr[23]/td[1]/input').click()
-driver.find_element_by_id('Pathwaystd').click()
-driver.find_element_by_xpath(
-    '/html/body/table[2]/tbody/tr/td[3]/table/tbody/tr/td/table/tbody/tr/td/table/tbody/tr/td/form/ul/li[6]/ul/li/table/tbody/tr[3]/td[1]/input').click()
-driver.find_element_by_xpath(
-    '/html/body/table[2]/tbody/tr/td[3]/table/tbody/tr/td/table/tbody/tr/td/table/tbody/tr/td/form/table[3]/tbody/tr[2]/td[1]/button').click()
-driver.switch_to.window(driver.window_handles[1])
-driver.maximize_window()
-driver.find_element_by_xpath(
-    '/html/body/table/tbody/tr[2]/td/table/tbody/tr[1]/td/form/table[2]/tbody/tr/td[2]/font/a').click()
-sleep(2)
-pyautogui.click()
-pyautogui.hotkey('ctrl', 's')
-pyautogui.press('1')
-pyautogui.press('enter')
+"""
