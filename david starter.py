@@ -2,7 +2,7 @@ from selenium import webdriver
 import pyautogui
 from time import sleep
 from tkinter import *
-#Tkinter
+
 excelN=''
 prot=''
 def myClick():
@@ -14,14 +14,14 @@ def myClick():
     return excelN,prot
 #GUI
 root = Tk()
-root.title('Nir Yad2 Bot')
+root.title('Nir.S - DAVID Starter')
 
-#Slots
+#slots
 protE = Entry(root,width=50,borderwidth=2)
 protE.grid(row=0,column = 1)
 excelE = Entry(root,width=50,borderwidth=2)
 excelE.grid(row=1,column = 1)
-#Labels
+#labels
 label1 = Label(root,text='Proteins: ')
 label2= Label(root,text='Excel name: ')
 label1.grid(row=0,column = 0)
@@ -33,10 +33,11 @@ b.grid(row=2,column = 2)
 root.mainloop()
 
 #selenium
-driver = webdriver.Chrome(r'C:\Users\NS\Downloads\PYTHON\chromedriver.exe')
+driver = webdriver.Chrome()
 driver.get('https://david.ncifcrf.gov/tools.jsp')
 driver.maximize_window()
 driver.implicitly_wait(300)
+
 driver.find_element_by_id('LISTBox').send_keys(prot)
 identifier = driver.find_element_by_id('Identifier')
 identifier.click()
@@ -64,15 +65,14 @@ driver.find_element_by_xpath(
     '/html/body/table/tbody/tr[2]/td/table/tbody/tr[1]/td/form/table[2]/tbody/tr/td[2]/font/a').click()
 sleep(2)
 pyautogui.click()
-#Saving
 pyautogui.hotkey('ctrl', 's')
 sleep(1)
 pyautogui.write(excelN)
-#pyautogui.press('enter')
+pyautogui.press('enter')
 
-#Protein list example
+#proteins list example:
 """
-prot = [''''  Q4KML4,
+Q4KML4,
 Q6ZQ06,
 Q3TDD9,
 P56565,
@@ -131,5 +131,4 @@ Q8BH04,
 Q8BSI6,
 P08905,
 Gsk3b
-''']
 """
